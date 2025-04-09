@@ -1,12 +1,12 @@
 package com.example.reviews;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class AppTest {
 
@@ -97,7 +97,7 @@ class AppTest {
         Review r2 = new Review(); r2.setCategory("Fitness"); r2.setPrice(60); r2.setProductId("P002");
 
         List<String> result = App.getHomeProductIdsUnder100(Arrays.asList(r1, r2));
-        assertTrue(result.size() == 0);
+        assertTrue(result.isEmpty());
     }
 
 }

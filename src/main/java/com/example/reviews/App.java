@@ -1,7 +1,5 @@
 package com.example.reviews;
 
-import com.opencsv.bean.CsvToBeanBuilder;
-
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import com.opencsv.bean.CsvToBeanBuilder;
 
 public class App {
 
@@ -117,7 +117,7 @@ public class App {
 
     public static List<Review> filterByPriceRange(List<Review> reviews, double min, double max) {
         //TODO - you need to implement this using a functional approach!
-        return null;
+            return null;
     }
 
     public static Map<String, Long> countByProductId(List<Review> reviews) {
@@ -151,7 +151,16 @@ public class App {
 
     public static List<String> getHomeProductIdsUnder100(List<Review> reviews) {
         //TODO - you need to implement this using a functional approach!
-        return new ArrayList<String>();                             // Final list of productIds
+        List<String> result = new ArrayList<>();
+        for (Review r : reviews) {
+            if ("Tech".equalsIgnoreCase(r.getCategory()) && r.getPrice() > 50) {
+                String title = r.getTitle();
+                if (title != null) {
+                    result.add(title.toUpperCase());
+                }
+            }
+        }
+        return new ArrayList<>();                             // Final list of productIds
     }
 
     
