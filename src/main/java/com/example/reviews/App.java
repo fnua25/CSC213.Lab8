@@ -3,6 +3,7 @@ package com.example.reviews;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -117,7 +118,9 @@ public class App {
 
     public static List<Review> filterByPriceRange(List<Review> reviews, double min, double max) {
         //TODO - you need to implement this using a functional approach!
-            return null;
+        return reviews.stream()
+                .filter(r -> r.getPrice() > min && r.getPrice() < max)
+                .collect(Collectors.toList());
     }
 
     public static Map<String, Long> countByProductId(List<Review> reviews) {
@@ -151,16 +154,13 @@ public class App {
 
     public static List<String> getHomeProductIdsUnder100(List<Review> reviews) {
         //TODO - you need to implement this using a functional approach!
-        List<String> result = new ArrayList<>();
-        for (Review r : reviews) {
-            if ("Tech".equalsIgnoreCase(r.getCategory()) && r.getPrice() > 50) {
-                String title = r.getTitle();
-                if (title != null) {
-                    result.add(title.toUpperCase());
-                }
-            }
-        }
-        return new ArrayList<>();                             // Final list of productIds
+        return reviews.stream()
+                .filter(r -> "Home".equalsIgnoreCase(r.getCategory()))       // Keep only Home reviews
+                .sorted(Comparator.comparingDouble(Review::getPrice))        // Sort by price
+                .filter(r -> r.getPrice() < 100)                             // ...with price < 100
+                .map(Review::getProductId)                                   // Extract the title
+                .filter(Objects::nonNull)                                    // Avoid nulls just in case
+                .collect(Collectors.toList());                               // Final result: List<String>  
     }
 
     
